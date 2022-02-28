@@ -305,6 +305,18 @@ AddEventHandler('QBCore:Client:OnJobUpdate', function(JobInfo)
     PlayerData.job = JobInfo
 end)
 
+
+AddEventHandler('onResourceStart', function(resourceName)
+	if (GetCurrentResourceName() ~= resourceName) then
+	  return
+	end
+	if PlayerPedId() then 
+        TriggerServerEvent("qb-clothes:loadPlayerSkin")
+        PlayerData = QBCore.Functions.GetPlayerData()
+	end
+
+  end)
+
 function DrawText3Ds(x, y, z, text)
 	SetTextScale(0.35, 0.35)
     SetTextFont(4)
@@ -333,7 +345,7 @@ Citizen.CreateThread(function()
     for k, v in pairs (Config.Stores) do
         if Config.Stores[k].shopType == "clothing" then
             local clothingShop = AddBlipForCoord(Config.Stores[k].coords)
-            SetBlipSprite(clothingShop, 366)
+            SetBlipSprite(clothingShop, 73)
             SetBlipColour(clothingShop, 47)
             SetBlipScale  (clothingShop, 0.7)
             SetBlipAsShortRange(clothingShop, true)
@@ -390,10 +402,14 @@ Citizen.CreateThread(function()
                             if IsControlJustPressed(0, 38) then -- E
                                 if Config.Stores[k].shopType == "clothing" then
                                     customCamLocation = nil
-                                    openMenu({
-                                        {menu = "character", label = "Clothing", selected = true},
-                                        {menu = "accessoires", label = "Accessories", selected = false}
-                                    })
+                                    QBCore.Functions.TriggerCallback('qb-clothing:server:getOutfits', function(result)
+                                        openMenu({
+                                            {menu = "character", label = "Clothing", selected = true},
+                                            {menu = "accessoires", label = "Accessories", selected = false},
+                                            {menu = "myOutfits", label = "My Outfits", selected = false, outfits = result},
+                                        })
+                                    end)
+                                    
                                 elseif Config.Stores[k].shopType == "barber" then
                                     customCamLocation = nil
                                     openMenu({
