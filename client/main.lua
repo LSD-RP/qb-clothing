@@ -631,12 +631,15 @@ Citizen.CreateThread(function()
                                     gender = "male"
                                     if QBCore.Functions.GetPlayerData().charinfo.gender == 1 then gender = "female" end
                                     QBCore.Functions.TriggerCallback('qb-clothing:server:getOutfits', function(result)
-                                        openMenu({
-                                            {menu = "roomOutfits", label = "Presets", selected = true, outfits = Config.Outfits[PlayerData.job.name][gender]},
+                                        local menuOptions = {
                                             {menu = "myOutfits", label = "My Outfits", selected = false, outfits = result},
                                             {menu = "character", label = "Clothing", selected = false},
                                             {menu = "accessoires", label = "Accessories", selected = false}
-                                        })
+                                        }
+                                        if Config.Outfits[PlayerData.job.name] then 
+                                            menuOptions[#menuOptions+1] = {menu = "roomOutfits", label = "Presets", selected = true, outfits = Config.Outfits[PlayerData.job.name][gender]}
+                                        end
+                                        openMenu(menuOptions)
                                     end)
                                 end
                             else

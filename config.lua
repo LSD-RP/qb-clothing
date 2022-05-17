@@ -535,6 +535,7 @@ Config.Stores = {
 	[22] =  {shopType = "barber",  coords = vector3(-278.1, 6228.5, 30.7), width = 2, length = 2},
     [23] =  {shopType = "clothing", coords = vector3(-804.63, -598.67, 30.28), width = 2, length = 2},
     [24] =  {shopType = "clothing", coords = vector3(1849.98, 3689.79, 34.27), width = 2, length = 2},
+    -- [22] =  {shopType = "barber",  coords = vector3(108.12, -1304.89, 28.79), width = 0.5, length = 0.5, showBlip = false},
 }
 
 -- set isGang to true if the requiredJob is a gang
